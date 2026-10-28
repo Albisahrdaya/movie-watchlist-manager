@@ -8,7 +8,7 @@ import {
 } from "lucide-react";
 import "./App.css";
 
-const API = "http://localhost:5000/api/movies";
+const API = `${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/movies`;
 const GENRES = [
   "Action", "Comedy", "Drama", "Horror",
   "Sci-Fi", "Romance", "Thriller",
