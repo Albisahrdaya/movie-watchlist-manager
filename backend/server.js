@@ -12,7 +12,7 @@ app.use(cors({ origin: "http://localhost:5173" }));
 app.use(express.json());
 
 app.get("/api/health", (req, res) => {
-  res.json({
+  res.status(200).json({
     success: true,
     message: "Movie Watchlist API is running.",
     data: null,
@@ -29,26 +29,23 @@ app.use((req, res) => {
   });
 });
 
-const PORT = process.env.PORT || 5000;
+module.exports = app;
 
-connectDB()
-  .then(async () => {
-    // Ensure the unique title/year index exists before accepting requests.
-    const Movie = require("./models/Movie");
-    await Movie.init();
-    
-    app.get("/api/health", (req, res) => {
-  res.status(200).json({
-    success: true,
-    message: "Movie Watchlist API is running",
-  });
-});
-    app.listen(PORT, () => {
-      console.log(`Server running at http://localhost:${PORT}`);
+// Connect to MongoDB and start listening only when running the server directly.
+if (require.main === module) {
+  const PORT = process.env.PORT || 5000;
+
+  connectDB()
+    .then(async () => {
+      const Movie = require("./models/Movie");
+      await Movie.init();
+
+      app.listen(PORT, () => {
+        console.log(`Server running at http://localhost:${PORT}`);
+      });
+    })
+    .catch((error) => {
+      console.error("Server startup failed:", error.message);
+      process.exit(1);
     });
-  })
-  .catch((error) => {
-    console.error("Server startup failed:", error.message);
-    process.exit(1);
-  });
-  
+}
