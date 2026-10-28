@@ -36,7 +36,13 @@ connectDB()
     // Ensure the unique title/year index exists before accepting requests.
     const Movie = require("./models/Movie");
     await Movie.init();
-
+    
+    app.get("/api/health", (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: "Movie Watchlist API is running",
+  });
+});
     app.listen(PORT, () => {
       console.log(`Server running at http://localhost:${PORT}`);
     });
