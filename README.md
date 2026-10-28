@@ -8,7 +8,7 @@ A full-stack web application for managing your personal movie watchlist. Add mov
 
 \## Features
 
-
+\- API health-check endpoint to verify that the backend is running
 
 \- Add, edit, and delete movies
 
@@ -200,25 +200,33 @@ Open the local URL displayed by Vite in your terminal, usually `http://localhost
 
 
 
-\## Environment Variables
-
-
+## Environment Variables
 
 | Variable | Description |
-
 |---|---|
-
 | `PORT` | Backend server port |
+| `MONGODB_URI` | MongoDB connection string |
 
-| `MONGODB\_URI` | MongoDB connection string |
+## API Endpoints
 
+The backend API runs at `http://localhost:5000` by default.
 
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `/api/health` | Check whether the API is running |
+| GET | `/api/movies` | List movies with optional filters and pagination |
+| GET | `/api/movies/watch-next` | Get the next recommended movie |
+| GET | `/api/movies/stats` | Get watchlist statistics |
+| POST | `/api/movies` | Add a movie |
+| PUT | `/api/movies/:id` | Update movie details |
+| PATCH | `/api/movies/:id/status` | Change a movie's watch status |
+| PATCH | `/api/movies/:id/rating` | Update a watched movie's rating |
+| DELETE | `/api/movies/:id` | Delete a movie |
 
-\## License
+## Health Check
 
+Start the backend and open `http://localhost:5000/api/health` in your browser. A successful response confirms that the API is running.
 
+## License
 
 This project is available for learning and personal portfolio use.
-
-
-
